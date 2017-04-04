@@ -11,7 +11,7 @@ module.exports = {
   entry: {
     app: [
       'babel-polyfill',
-      'webpack-hot-middleware/client',
+      // 'webpack-hot-middleware/client',
       Path.resolve(__dirname, 'src/index.js')
     ]
   },
@@ -21,7 +21,7 @@ module.exports = {
     filename: '[name].js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
