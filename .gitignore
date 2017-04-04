@@ -1,0 +1,14 @@
+.publish/
+/build/
+dist/
+node_modules/
+tmp
+/nbproject
+npm-debug.log
+logs/*
+._.gitignore
+.settings/
+.project
+.gulp*
+temp/
+.DS_Store
