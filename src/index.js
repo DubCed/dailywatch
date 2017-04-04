@@ -14,7 +14,8 @@ const options = {
     },
   },
   magicEffect: {
-    expandCollapse: true
+    expandCollapse: true,
+    playOnArea: true
   }
 }
 
