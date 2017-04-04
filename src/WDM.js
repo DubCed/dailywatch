@@ -1,3 +1,5 @@
+import OptionBar from './OptionBar'
+
 export default class WDM {
 
   constructor (playerId, mainContainerId, { options, magicEffect }) {
@@ -6,12 +8,20 @@ export default class WDM {
 
     this.dmOptions = options
     this.wdmOptions = magicEffect;
+
+    this.callbacks = {
+      expandCollapse: {
+        expand: this.showPlayer.bind(this),
+        collapse: this.hidePlayer.bind(this)
+      }
+    }
   }
 
   loadPlayer () {
     this.dmPlayer = DM.player(this.playerContainer, this.dmOptions)
 
     this.addListeners()
+    OptionBar.displayControls(this.mainContainer, this.wdmOptions, this.callbacks)
   }
 
   hidePlayer () {
@@ -41,5 +51,6 @@ export default class WDM {
   destroy () {
     this.removeListeners()
     this.dmPlayer = null
+    OptionBar.destroy()
   }
 }

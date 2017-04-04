@@ -1,3 +1,7 @@
+.hidden {
+  display: none;
+}
+
 .linearHidden {
   height: 0px;
   -webkit-transition: height 2s linear;
@@ -5,4 +9,20 @@
   -ms-transition: height 2s linear;
   -o-transition: height 2s linear;
   transition: height 2s linear;
+}
+
+.optionBar {
+  padding: 10px;
+  background-color: #333333;
+  color: #a0a0a0;
+  width: 460px;
+}
+
+.icon {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: #ffffff;
 }
