@@ -49,6 +49,11 @@ export default class WDM {
     }
   }
 
+  toggleMute () {
+    console.log(this.dmPlayer.muted, this.dmPlayer.volume)
+    this.dmPlayer.setMuted(!this.dmPlayer.muted)
+  }
+
   addListeners () {
     if (!!this.wdmOptions.expandCollapse) {
       this.dmPlayer.addEventListener('end', this.hidePlayer.bind(this))
@@ -61,12 +66,19 @@ export default class WDM {
       })
       document.addEventListener('scroll', this.isVisibleElement.bind(this))
     }
+    //if (this.dmOptions.params.mute && !!this.wdmOptions.unMuteOnOver) {
+    if (!!this.wdmOptions.unMuteOnOver) {
+      this.dmPlayer.addEventListener('mouseover', this.toggleMute.bind(this))
+      this.dmPlayer.addEventListener('mouseout', this.toggleMute.bind(this))
+    }
   }
 
   removeListeners () {
     this.dmPlayer.removeEventListener('end', this.hidePlayer.bind(this))
     document.removeEventListener('scroll', this.isVisibleElement.bind(this))
     this.dmPlayer.removeEventListener('loadedmetadata', () => {})
+    this.dmPlayer.removeEventListener('mouseover', this.toggleMute.bind(this))
+    this.dmPlayer.removeEventListener('mouseout', this.toggleMute.bind(this))
   }
 
   destroy () {

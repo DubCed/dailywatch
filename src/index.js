@@ -15,7 +15,8 @@ const options = {
   },
   magicEffect: {
     expandCollapse: true,
-    playOnArea: true
+    playOnArea: true,
+    unMuteOnOver: true
   }
 }
 
