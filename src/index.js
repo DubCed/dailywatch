@@ -14,9 +14,11 @@ const options = {
     },
   },
   magicEffect: {
-    expandCollapse: true,
-    playOnArea: true,
-    unMuteOnOver: true
+    expandCollapse: false,
+    playOnArea: false,
+    unMuteOnOver: false,
+    autoExpandOnArea: false,
+    activePIP: true
   }
 }
 
