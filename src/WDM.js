@@ -157,6 +157,7 @@ export default class WDM {
       this.dmPlayer.addEventListener('mouseout', this.toggleMute.bind(this))
     }
     if (!!this.wdmOptions.activeImmersiveMode) {
+      this.mainContainer.style.position = 'relative'
       this.createDivPlayer()
       this.dmPlayer.addEventListener('click', this.openImmersiveMode.bind(this))
       document.addEventListener('keyup', (e) => {
