@@ -18,7 +18,8 @@ const options = {
     playOnArea: false,
     unMuteOnOver: false,
     autoExpandOnArea: false,
-    activePIP: true
+    activePIP: false,
+    activeImmersiveMode: true
   }
 }
 

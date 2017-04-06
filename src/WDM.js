@@ -1,6 +1,8 @@
 import OptionBar from './OptionBar'
 
 export default class WDM {
+  immersiveModeDivId = 'immersiveMode'
+  divPlayerId = 'divPlayer'
 
   constructor (playerId, mainContainerId, { options, magicEffect }) {
     this.playerContainer = document.getElementById(playerId)
@@ -72,8 +74,7 @@ export default class WDM {
   }
 
   toggleMute () {
-    console.log(this.dmPlayer.muted, this.dmPlayer.volume)
-    this.dmPlayer.setMuted(!this.dmPlayer.muted)
+    this.dmPlayer.toggleMuted()
   }
 
   onScrollAutoExpand () {
@@ -85,20 +86,50 @@ export default class WDM {
   }
 
   onScrollActivePIP () {
-    if (!this.pipPlayerHasBeenViewed) {
+    if (this.pipPlayerHasBeenViewed) {
+      if (!this.isVisibleElement()) {
+        this.dmPlayer.style = 'position: fixed; bottom: 10px; right: 10px;'
+      }
+      if (this.isVisibleElement(this.mainContainer)) {
+        this.stopPIP()
+      }
+    } else {
       this.pipPlayerHasBeenViewed = this.isVisibleElement()
-    }
-    if (this.pipPlayerHasBeenViewed && !this.isVisibleElement()) {
-      this.dmPlayer.style = 'position: fixed; bottom: 10px; right: 10px;'
-    }
-    if (this.isVisibleElement(this.mainContainer)) {
-      this.stopPIP()
     }
   }
 
   stopPIP () {
     this.pipPlayerHasBeenViewed = false
     this.dmPlayer.style = ''
+  }
+
+  createDivPlayer () {
+    let divPlayer = document.createElement('div')
+    divPlayer.id = this.divPlayerId
+    divPlayer.style = 'height: ' + this.dmPlayer.height + 'px; width: ' + this.dmPlayer.width + 'px; position: absolute; top: 0; left: 0;'
+    this.mainContainer.appendChild(divPlayer)
+    divPlayer.addEventListener('click', this.openImmersiveMode.bind(this))
+  }
+
+  openImmersiveMode () {
+    let immersiveModeDiv = document.createElement('div')
+    immersiveModeDiv.id = this.immersiveModeDivId
+    immersiveModeDiv.style = 'background: black; width: 100%; height: 100%; position: fixed; top: 0; left: 0; opacity: 0.9;'
+    document.body.insertBefore(immersiveModeDiv, this.mainContainer)
+    this.dmPlayer.style = 'position: fixed; bottom: ' + (window.innerHeight-this.dmPlayer.offsetHeight) / 2 + 'px; right: ' + (window.innerWidth-this.dmPlayer.offsetWidth) / 2 + 'px;'
+    this.dmPlayer.setMuted(false)
+    immersiveModeDiv.addEventListener('click', this.closeImmersiveMode.bind(this))
+    let divPlayer = document.getElementById(this.divPlayerId)
+    divPlayer.style.display = 'none'
+  }
+
+  closeImmersiveMode () {
+    this.dmPlayer.style = ''
+    const immersiveModeDiv = document.getElementById(this.immersiveModeDivId)
+    immersiveModeDiv.parentNode.removeChild(immersiveModeDiv)
+    this.dmPlayer.setMuted(true)
+    let divPlayer = document.getElementById(this.divPlayerId)
+    divPlayer.style.display = 'block'
   }
 
   addListeners () {
@@ -121,10 +152,19 @@ export default class WDM {
       document.addEventListener('scroll', this.onScrollActivePIP.bind(this))
       this.dmPlayer.addEventListener('end', this.stopPIP.bind(this))
     }
-    //if (this.dmOptions.params.mute && !!this.wdmOptions.unMuteOnOver) {
     if (!!this.wdmOptions.unMuteOnOver) {
       this.dmPlayer.addEventListener('mouseover', this.toggleMute.bind(this))
       this.dmPlayer.addEventListener('mouseout', this.toggleMute.bind(this))
+    }
+    if (!!this.wdmOptions.activeImmersiveMode) {
+      this.createDivPlayer()
+      this.dmPlayer.addEventListener('click', this.openImmersiveMode.bind(this))
+      document.addEventListener('keyup', (e) => {
+        if (document.getElementById(this.immersiveModeDivId)) {
+          if (e.keyCode === 27) { this.closeImmersiveMode() }
+        }
+      })
+      this.dmPlayer.addEventListener('end', this.closeImmersiveMode.bind(this))
     }
   }
 
@@ -137,6 +177,17 @@ export default class WDM {
     document.addEventListener('scroll', this.onScrollAutoExpand.bind(this))
     document.removeEventListener('scroll', this.onScrollActivePIP.bind(this))
     this.dmPlayer.removeEventListener('end', this.stopPIP.bind(this))
+    this.mainContainer.removeEventListener('click', this.openImmersiveMode.bind(this))
+    document.removeEventListener('keyup', () => {})
+    const immersiveModeDiv = document.getElementById(this.immersiveModeDivId)
+    if (immersiveModeDiv) {
+      immersiveModeDiv.removeEventListener('click', this.closeImmersiveMode.bind(this))
+    }
+    this.dmPlayer.removeEventListener('end', this.closeImmersiveMode.bind(this))
+    const divPlayer = document.getElementById(this.divPlayerId)
+    if (divPlayer) {
+      divPlayer.addEventListener('click', this.openImmersiveMode.bind(this))
+    }
   }
 
   destroy () {

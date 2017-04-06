@@ -3,4 +3,5 @@
   transition: all 6s linear;
   display: block;
   height: 280px;
+  position: relative;
 }
