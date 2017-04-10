@@ -25,7 +25,7 @@ export default class WDM {
     this.dmPlayer = DM.player(this.playerContainer, this.dmOptions)
 
     this.addListeners()
-    OptionBar.displayControls(this.mainContainer, this.wdmOptions, this.callbacks)
+    // OptionBar.displayControls(this.mainContainer, this.wdmOptions, this.callbacks)
   }
 
   hidePlayer (animated = true) {
@@ -134,6 +134,7 @@ export default class WDM {
 
   addListeners () {
     if (!!this.wdmOptions.expandCollapse) {
+      this.mainContainer.style.height = 'auto'
       this.dmPlayer.addEventListener('end', this.hidePlayer.bind(this))
     }
     if (!!this.wdmOptions.autoExpandOnArea) {
