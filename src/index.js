@@ -18,7 +18,13 @@ const options = {
     playOnArea: false,
     unMuteOnOver: false,
     autoExpandOnArea: false,
-    activePIP: false,
+    pip: {
+      active: true,
+      width: '300px',
+      height: '100px',
+      position: 'top-left',
+      margin: '20px'
+    },
     activeImmersiveMode: false
   }
 }

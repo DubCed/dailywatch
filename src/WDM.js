@@ -85,10 +85,43 @@ export default class WDM {
     }
   }
 
+  definePosition () {
+    let res = this.wdmOptions.pip.position.split('-')
+    const margin = this.wdmOptions.pip.margin || '10px'
+
+    let elevation = `bottom: ${margin}; `
+    let amplitude = `right: ${margin}; `
+
+    res.forEach((val, number, key) => {
+      if (['bottom', 'top'].indexOf(val) !== -1) {
+        elevation = `${val}:${margin}; `
+      }
+      if (['right', 'left'].indexOf(val) !== -1) {
+        amplitude = `${val}:${margin}; `
+      }
+    })
+    let property = elevation + amplitude
+    return property
+  }
+
   onScrollActivePIP () {
+    const position = this.wdmOptions.pip.position
+    const width = this.wdmOptions.pip.width
+    const height = this.wdmOptions.pip.height
+
+    let stylePIP = 'position: fixed; '
+    stylePIP += this.definePosition()
+
+    if (width) {
+      stylePIP += `width: ${width}; `
+    }
+    if (height) {
+      stylePIP += `height: ${height}; `
+    }
+
     if (this.pipPlayerHasBeenViewed) {
       if (!this.isVisibleElement()) {
-        this.dmPlayer.style = 'position: fixed; bottom: 10px; right: 10px;'
+        this.dmPlayer.style = stylePIP
       }
       if (this.isVisibleElement(this.mainContainer)) {
         this.stopPIP()
@@ -144,12 +177,12 @@ export default class WDM {
       document.addEventListener('scroll', this.onScrollAutoExpand.bind(this))
       this.dmPlayer.addEventListener('end', this.hidePlayer.bind(this))
     }
-    if (!!this.wdmOptions.playOnArea || !!this.wdmOptions.activePIP) {
+    if (!!this.wdmOptions.playOnArea) {
       // when the video is loaded, set the video on pause while the user is not seeing it on his screen
       this.dmPlayer.addEventListener('loadedmetadata', this.onLoadedMetadata.bind(this))
       document.addEventListener('scroll', this.onScroll.bind(this))
     }
-    if (!!this.wdmOptions.activePIP) {
+    if (!!this.wdmOptions.pip.active) {
       document.addEventListener('scroll', this.onScrollActivePIP.bind(this))
       this.dmPlayer.addEventListener('end', this.stopPIP.bind(this))
     }
