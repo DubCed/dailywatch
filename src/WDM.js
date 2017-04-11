@@ -1,5 +1,3 @@
-import OptionBar from './OptionBar'
-
 export default class WDM {
   immersiveModeDivId = 'immersiveMode'
   divPlayerId = 'divPlayer'
@@ -195,6 +193,5 @@ export default class WDM {
   destroy () {
     this.removeListeners()
     this.dmPlayer = null
-    OptionBar.destroy()
   }
 }

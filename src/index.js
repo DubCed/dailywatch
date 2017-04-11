@@ -1,7 +1,5 @@
 //import WDM from './WDM'
-import player from './Player'
-
-const containerId = 'player'
+import Player from './Player'
 
 /*const options = {
   options: {
@@ -52,6 +50,13 @@ switch (vars[1]) {
 }
 console.log(options)*/
 
-const wdm = new player(containerId)
+var divs = document.getElementsByClassName('dailymotion-magicEffect');
+const player = new Player(divs[0])
+const videoId = 'x5h921v'
+const options = {
+  autoplay: true,
+  mute: true
+}
+player.init(videoId, options)
 
 // wdm.loadPlayer()
