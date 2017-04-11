@@ -1,9 +1,9 @@
-import WDM from './WDM'
+//import WDM from './WDM'
+import player from './Player'
 
-const mainContainerId = 'wdmc'
-const playerId = 'player'
+const containerId = 'player'
 
-const options = {
+/*const options = {
   options: {
     video: "x4xswm7",
     width: "480",
@@ -21,9 +21,9 @@ const options = {
     activePIP: false,
     activeImmersiveMode: false
   }
-}
+}*/
 
-const query = window.location.search.substring(1)
+/*const query = window.location.search.substring(1)
 const vars = query.split("=")
 switch (vars[1]) {
   case '1':
@@ -50,8 +50,8 @@ switch (vars[1]) {
     options.magicEffect.activeImmersiveMode = true
     break;
 }
-console.log(options)
+console.log(options)*/
 
-const wdm = new WDM(playerId, mainContainerId, options)
+const wdm = new player(containerId)
 
-wdm.loadPlayer()
+// wdm.loadPlayer()
