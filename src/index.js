@@ -1,25 +1,4 @@
-//import WDM from './WDM'
 import Player from './Player'
-
-/*const options = {
-  options: {
-    video: "x4xswm7",
-    width: "480",
-    height: "270",
-    params: {
-        autoplay: true,
-        mute: true
-    },
-  },
-  magicEffect: {
-    expandCollapse: false,
-    playOnArea: false,
-    unMuteOnOver: false,
-    autoExpandOnArea: false,
-    activePIP: false,
-    activeImmersiveMode: false
-  }
-}*/
 
 /*const query = window.location.search.substring(1)
 const vars = query.split("=")
@@ -54,9 +33,7 @@ var divs = document.getElementsByClassName('dailymotion-magicEffect');
 const player = new Player(divs[0])
 const videoId = 'x5h921v'
 const options = {
-  autoplay: true,
+  autoplay: false,
   mute: true
 }
 player.init(videoId, options)
-
-// wdm.loadPlayer()

@@ -133,13 +133,13 @@ if("undefined"===typeof lmd||!lmd)lmd={};(function(a,b){var d=a.onerror,c="";a.o
     <div id="surheader">
     <div class="contenu">
         <div class="groupe">
-            <a href="/" title="Le Monde" target="_self">Le Monde</a>
-            <a href="http://www.telerama.fr/" title="T&eacute;l&eacute;rama" target="_blank">T&eacute;l&eacute;rama</a>
-            <a href="http://www.monde-diplomatique.fr/" title="Le Monde diplomatique" target="_blank">Le Monde diplomatique</a>
-            <a href="http://www.huffingtonpost.fr/" title="Le Huffington Post" target="_blank">Le Huffington Post</a>
-            <a href="http://www.courrierinternational.com/" title="Courrier international" target="_blank">Courrier international</a>
-            <a href="http://www.lavie.fr/" title="La Vie" target="_blank">La Vie</a>
-            <a href="http://tempsreel.nouvelobs.com/" title="L'Obs" target="_blank">L'Obs</a>
+					<a href="index.html" title="Le Monde" target="_self">Le Monde</a>
+					<a href="index.html?id=1">PIP</a>
+					<a href="index.html?id=2">Unmute on over</a>
+					<a href="index.html?id=3">Scroll to play</a>
+					<a href="index.html?id=4">Expand and collapse</a>
+					<a href="index.html?id=5">Expand on scroll</a>
+					<a href="index.html?id=6">Immersive mode</a>
         </div>
 
         <div class="services">
@@ -409,9 +409,14 @@ if("undefined"===typeof lmd||!lmd)lmd={};(function(a,b){var d=a.onerror,c="";a.o
          </div>
       </nav>
       <div class="suite_entrees">
-         <p class="entrees">
-               <a href="http://dicocitations.lemonde.fr/">Citations</a>
-         </p>
+				<p class="entrees">
+							<a href="index.html?id=1">PIP</a>
+							<a href="index.html?id=2">Unmute on over</a>
+							<a href="index.html?id=3">Scroll to play</a>
+							<a href="index.html?id=4">Expand and collapse</a>
+							<a href="index.html?id=5">Expand on scroll</a>
+							<a href="index.html?id=6">Immersive mode</a>
+				</p>
       </div>
 
 
@@ -464,7 +469,7 @@ Par      <span itemprop="author" class="auteur txt2_120">            <a class="a
 <br/>
 
 <!-- ---------------WDM------------------------ -->
-<div class="dailymotion-magicEffect" data-placement="58e76199a6f43900de6793da"></div>
+<div class="dailymotion-magicEffect" id="wdmPlacement" data-placement="dataplacement" style="width: 480px; height: 270px; clear: both;"></div>
 <script>
 (function(w,d,s,u,n,e,c){
 	w.WDMObject = n;
@@ -479,7 +484,14 @@ Par      <span itemprop="author" class="auteur txt2_120">            <a class="a
 	c.parentNode.insertBefore(e,c);
 })
 (window, document, "script", "dist/app.js", "wdm");
+
+const query = window.location.search.substring(1)
+const vars = query.split("=")
+const dataplacement = vars[1] || 1
+let wdmDiv = document.getElementById('wdmPlacement')
+wdmDiv.setAttribute('data-placement', dataplacement)
 </script>
+<link rel="stylesheet" type="text/css" href="css/wdm.css">
 <!-- ---------------WDM------------------------ -->
 
 <h2 class="taille_courante">L’homme a pris son temps pour <a target='_blank' onclick='return false;' class='lien_interne conjug' href='http://conjugaison.lemonde.fr/conjugaison/premier-groupe/%C3%A9voluer/' title='Conjugaison du verbe évoluer'>évoluer</a>. Mais, avant qu’il domine <a class="lien_interne rub" href="http://www.lemonde.fr/le-monde/" title="Toute l’actualité le monde">le monde</a>, la Terre a été celle de ses lointains ancêtres : les grands singes à travers lesquels <em>Premier homme</em>, docu-fiction de Frédéric Fougea et ­Jérôme Guiot, entend <a target='_blank' onclick='return false;' class='lien_interne conjug' href='http://conjugaison.lemonde.fr/conjugaison/premier-groupe/retracer/' title='Conjugaison du verbe retracer'>retracer</a> l’odyssée de l’espèce humaine.</h2>
