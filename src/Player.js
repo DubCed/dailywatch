@@ -21,7 +21,7 @@ export default class Player {
     }
 
     // load the WDM config dynamicaly
-    const wdmPlayerConfig = getJsonOptions(this.container.getAttribute('data-placement'))
+    const wdmPlayerConfig = getJsonOptions(this.container.parentElement.getAttribute('data-placement'))
 
     // creation of WDM player
     new WDM(playerDiv, playerConfig, wdmPlayerConfig)
