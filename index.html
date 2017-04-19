@@ -469,7 +469,9 @@ Par      <span itemprop="author" class="auteur txt2_120">            <a class="a
 <br/>
 
 <!-- ---------------WDM------------------------ -->
-<div class="dailymotion-magicEffect" id="wdmPlacement" data-placement="dataplacement" style="width: 480px; height: 270px; clear: both;"></div>
+<div class="dailymotion-magicEffect" data-placement="dataplacement" data-id="x5h921v" style="width: 480px; height: 270px; clear: both;">
+  <div class="insider"></div>
+</div>
 <script>
 (function(w,d,s,u,n,e,c){
 	w.WDMObject = n;
@@ -488,7 +490,7 @@ Par      <span itemprop="author" class="auteur txt2_120">            <a class="a
 const query = window.location.search.substring(1)
 const vars = query.split("=")
 const dataplacement = vars[1] || 1
-let wdmDiv = document.getElementById('wdmPlacement')
+const wdmDiv = document.getElementsByClassName('dailymotion-magicEffect')[0]
 wdmDiv.setAttribute('data-placement', dataplacement)
 </script>
 <link rel="stylesheet" type="text/css" href="css/wdm.css">

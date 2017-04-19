@@ -9,7 +9,7 @@ export default class Player {
 
   initPlayer (videoId, optionParams) {
     // Load a new player in the designated container
-    let playerDiv = document.createElement('div')
+    const playerDiv = document.createElement('div')
     playerDiv.style['background-color'] = 'black'
     this.container.appendChild(playerDiv)
 
@@ -21,8 +21,7 @@ export default class Player {
     }
 
     // load the WDM config dynamicaly
-    let wdmPlacementDiv = document.getElementById('wdmPlacement')
-    const wdmPlayerConfig = getJsonOptions(wdmPlacementDiv.getAttribute('data-placement'))
+    const wdmPlayerConfig = getJsonOptions(this.container.getAttribute('data-placement'))
 
     // creation of WDM player
     new WDM(playerDiv, playerConfig, wdmPlayerConfig)
