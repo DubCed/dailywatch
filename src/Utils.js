@@ -43,3 +43,45 @@ export function isVisibleElement (elmnt, wanted = 'full') {
     return partial
   }
 }
+
+export function getRandClassName () {
+  return 'wdm-' + Math.random().toString(36).substr(2, 5)
+}
+
+export function debounce (func, wait, immediate) {
+  let timeout
+  return function() {
+    const context = this
+    const args = arguments
+    const later = function() {
+      timeout = null
+      if (!immediate) {
+        func.apply(context, args)
+      }
+    }
+    const callNow = immediate && !timeout
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+    if (callNow) {
+      func.apply(context, args)
+    }
+  }
+}
+
+export function addClassName (element, className) {
+  // element.setAttribute('class', `${element.getAttribute('class')} ${className}`)
+  element.classList.add(className)
+}
+
+export function removeClassName (element, className) {
+  // element.setAttribute('class', element.getAttribute('class').replace(` ${className}`, ''))
+  element.classList.remove(className)
+}
+
+export function addOrRemoveClassName (element, className) {
+  if (element.classList.contains(className)) {
+    removeClassName(element, className)
+  } else {
+    addClassName(element, className)
+  }
+}

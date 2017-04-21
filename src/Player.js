@@ -1,10 +1,9 @@
 import WDM from './WDM'
-import {getJsonOptions} from './fakeWdmApi'
 
 export default class Player {
-  constructor (container) {
+  constructor (container, wdmPlayerConfig) {
     this.container = container
-    this.dmPlayer = null
+    this.wdmPlayerConfig = wdmPlayerConfig
   }
 
   initPlayer (videoId, optionParams) {
@@ -20,33 +19,13 @@ export default class Player {
       params: optionParams
     }
 
-    // load the WDM config dynamicaly
-    const wdmPlayerConfig = getJsonOptions(this.container.parentElement.getAttribute('data-placement'))
-
     // creation of WDM player
-    new WDM(playerDiv, playerConfig, wdmPlayerConfig)
+    new WDM(playerDiv, playerConfig, this.wdmPlayerConfig)
   }
 
   init (videoId, optionParams) {
     this.loadAsync(videoId, optionParams)
   }
-
-  play (videoId, optionParams) {
-    if (!this.dmPlayer) {
-      this.init(videoId, optionParams)
-    } else {
-      // Switch to requested video
-      this.dmPlayer.init(videoId, optionParams)
-    }
-  };
-
-
-  remove () {
-   if (this.dmPlayer) {
-     // dom.remove(this.dmPlayer);
-     this.dmPlayer = null
-   }
-  };
 
   loadAsync (videoId, optionParams) {
     if (!('DM' in window)) {

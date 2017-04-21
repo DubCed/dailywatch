@@ -6,8 +6,6 @@ import Eos from './options/Eos'
 import Imod from './options/Imod'
 
 export default class WDM {
-  immersiveModeDivId = 'immersiveMode'
-  divPlayerId = 'divPlayer'
 
   constructor (playerDiv, dmPlayerConfig, wdmPlayerConfig) {
     this.playerDivReplacement = playerDiv
@@ -44,7 +42,6 @@ export default class WDM {
   }
 
   destroy () {
-    this.removeListeners()
-    this.wdmPlayer = null
+    this.dmPlayer = null
   }
 }

@@ -5,10 +5,10 @@ export function getJsonOptions (id) {
       style = {
         pip: {
           active: true,
-          width: '300px',
-          height: '176px',
+          width: '300',
+          height: '176',
           position: 'bottom-right',
-          margin: '25px'
+          margin: '30'
         }
       }
     break;
