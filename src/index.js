@@ -1,3 +1,5 @@
+// https://developer.dailymotion.com/tools/apiexplorer#/video/info
+
 import Player from './Player'
 import {getRandClassName} from './Utils'
 import {getJsonOptions} from './fakeWdmApi'

@@ -2,23 +2,34 @@ import {addClassName, addOrRemoveClassName, debounce, isVisibleElement, removeCl
 
 export default class Pip {
   constructor (wdmPlayer, config) {
-    this.width = config.width
-    this.height = config.height
-    this.initWidth = wdmPlayer.getAttribute('width')
-    this.initHeight = wdmPlayer.getAttribute('height')
-    this.position = config.position
-    this.margin = config.margin || 10
-    this.effectDuration = 1
+    this.getConfigValues(config)
 
     this.wdmPlayer = wdmPlayer
-    this.wdmPlayerContainer = this.wdmPlayer.parentNode
+    this.wdmPlayerContainer = this.wdmPlayer.parentElement
+    this.mainContainer = this.wdmPlayerContainer.parentElement
+    this.initWidth = this.wdmPlayer.getAttribute('width')
+    this.initHeight = this.wdmPlayer.getAttribute('height')
 
+    this.init()
+  }
+
+  getConfigValues (config) {
+    this.width = config.width
+    this.height = config.height
+    this.position = config.position
+    this.margin = config.margin || 10
+    this.effectDuration = config.effectDuration || 0.5
+  }
+
+  init () {
     this.playerHasBeenViewed = false
     this.dataLoaded = false
     this.reduced = false
+    this.posterUrl = this.getPosterUrl()
 
     this.addListeners()
     this.addStyle()
+    this.addPoster()
   }
 
   defineLoadingState () {
@@ -68,10 +79,43 @@ export default class Pip {
       width: ${this.width}px;
       height: ${this.height}px;
     }`
-    style.innerHTML += `.dmp_Dock {
+    style.innerHTML += `.poster {
+      background-repeat:no-repeat;
+      background-size:cover;
+      height:100%;
+      width:100%;
+      background-image: url("${this.posterUrl}");
+    }`
+    style.innerHTML += `.hide {
       display: none;
     }`
-    this.wdmPlayer.parentElement.parentElement.appendChild(style)
+    this.mainContainer.appendChild(style)
+  }
+
+  getPosterUrl () {
+    return 'http://s2.dmcdn.net/iWJyE/x480-zsC.jpg'
+  }
+
+  addPoster () {
+    if (!!this.posterUrl) {
+      this.posterDiv = document.createElement('div')
+
+      this.posterDiv.setAttribute('class', 'poster hide')
+      this.mainContainer.appendChild(this.posterDiv)
+
+    }
+  }
+
+  showPoster () {
+    if (!!this.posterUrl) {
+      setTimeout(() => removeClassName(this.posterDiv, 'hide'), this.effectDuration * 1000)
+    }
+  }
+
+  hidePoster () {
+    if (!!this.posterUrl) {
+      setTimeout(() => addClassName(this.posterDiv, 'hide'), this.effectDuration * 1000)
+    }
   }
 
   reducePlayer () {
@@ -79,7 +123,7 @@ export default class Pip {
       this.reduced = true
       const finalSize = {w: this.width, h: this.height}
       const delta = this.calculateTranslation(this.wdmPlayer, finalSize, 'reduce')
-      this.addPoster()
+      this.showPoster()
       this.translate(this.wdmPlayer, delta, finalSize)
       this.addCloseBtn()
       this.addEscapEvent()
@@ -94,22 +138,13 @@ export default class Pip {
       this.removeCloseBtn()
       this.removeEscapeEvent()
       this.translate(this.wdmPlayer, delta, finalSize)
-      this.removePoster()
+      this.hidePoster()
     }
-  }
-
-  addPoster () {
-    // const posterStyle = this.wdmPlayer.getElementsByClassName('dmp_Poster')[0].getAttribute('style')
-    // console.log(this.wdmPlayer.getElementsByClassName('dmp_Poster'))
-  }
-
-  removePoster () {
-
   }
 
   calculateTranslation (element, finalSize, effect) {
     const coordinates = element.getBoundingClientRect()
-    const toCoordinates = element.parentElement.parentElement.getBoundingClientRect()
+    const toCoordinates = this.mainContainer.getBoundingClientRect()
     const res = this.position.split('-')
     const verticalScrollBarWidth = window.innerWidth - document.documentElement.clientWidth
     const horizontalScrollBarWidth = window.innerHeight - document.documentElement.clientHeight
@@ -148,7 +183,7 @@ export default class Pip {
     setTimeout(() => {
       element.style = ''
       if (element === this.wdmPlayer) {
-        addOrRemoveClassName(this.wdmPlayer.parentElement, 'pip')
+        addOrRemoveClassName(this.wdmPlayerContainer, 'pip')
       }
     }, this.effectDuration * 1000)
   }
