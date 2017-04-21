@@ -72,6 +72,9 @@ export default class Pip {
     style.innerHTML += `div.insider {
       z-index: 2147483647;
     }`
+    style.innerHTML += `iframe {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    }`
     style.innerHTML += `.pip {
       z-index: 2147483647;
       position: fixed;
@@ -182,9 +185,7 @@ export default class Pip {
     element.style.zIndex = '2147483647'
     setTimeout(() => {
       element.style = ''
-      if (element === this.wdmPlayer) {
-        addOrRemoveClassName(this.wdmPlayerContainer, 'pip')
-      }
+      addOrRemoveClassName(this.wdmPlayerContainer, 'pip')
     }, this.effectDuration * 1000)
   }
 
@@ -196,10 +197,8 @@ export default class Pip {
       }
       if (this.playerHasBeenViewed) {
         if (isVisible.height) {
-          console.log('reinit')
           this.stop()
         } else if (!this.wdmPlayer.paused) {
-          console.log('reduce')
           this.reducePlayer()
         }
       } else {
