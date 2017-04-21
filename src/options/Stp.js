@@ -1,10 +1,12 @@
 import {isVisibleElement} from '../Utils'
 
 export default class Stp {
-  constructor (wdmPlayer) {
+  constructor (wdmPlayer, config) {
     this.wdmPlayer = wdmPlayer
     this.dataLoaded = false
     this.contentAlreadyStreamed = false
+
+    this.visibilityPercent = config.visibilityPercent
 
     this.addListeners()
   }
@@ -27,7 +29,7 @@ export default class Stp {
   }
 
   defineLoadingState () {
-    const isVisible = isVisibleElement(this.wdmPlayer)
+    const isVisible = isVisibleElement(this.wdmPlayer, 'partial', this.visibilityPercent)
     if (isVisible.height) {
       this.wdmPlayer.play()
     }
@@ -35,7 +37,7 @@ export default class Stp {
 
   onScroll () {
     if (this.dataLoaded && !this.contentAlreadyStreamed) {
-      const isVisible = isVisibleElement(this.wdmPlayer)
+      const isVisible = isVisibleElement(this.wdmPlayer, 'partial', this.visibilityPercent)
       if (isVisible.height) {
         this.wdmPlayer.play()
       } else {

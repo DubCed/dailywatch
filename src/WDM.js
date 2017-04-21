@@ -17,6 +17,7 @@ export default class WDM {
 
   loadPlayer () {
     this.dmPlayer = DM.player(this.playerDivReplacement, this.dmPlayerConfig)
+    this.dmPlayer.video = this.dmPlayerConfig.video
     this.initWdmPlayer()
   }
 
@@ -28,7 +29,7 @@ export default class WDM {
       let umoh = new Umoh(this.dmPlayer)
     }
     if (this.wdmPlayerConfig.style.hasOwnProperty('stp') && this.wdmPlayerConfig.style.stp.active) {
-      let stp = new Stp(this.dmPlayer)
+      let stp = new Stp(this.dmPlayer, this.wdmPlayerConfig.style.stp)
     }
     if (this.wdmPlayerConfig.style.hasOwnProperty('eac') && this.wdmPlayerConfig.style.eac.active) {
       let eac = new Eac(this.dmPlayer)

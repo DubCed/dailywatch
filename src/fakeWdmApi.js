@@ -22,7 +22,8 @@ export function getJsonOptions (id) {
     case '3':
       style = {
         stp: {
-          active: true
+          active: true,
+          visibilityPercent: 50
         }
       }
     break;
@@ -45,7 +46,9 @@ export function getJsonOptions (id) {
         imod: {
           active: true,
           width: 800,
-          height: 470
+          height: 470,
+          apiType: 'playlist',
+          apiId: 'x4vkoj'
         }
       }
     break;

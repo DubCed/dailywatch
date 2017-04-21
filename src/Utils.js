@@ -1,4 +1,4 @@
-export function isVisibleElement (elmnt, wanted = 'full') {
+export function isVisibleElement (elmnt, wanted = 'full', visibilityPercent = 60) {
   let parentElmnt = elmnt.offsetParent
 
   let displayedScreen = {
@@ -34,7 +34,18 @@ export function isVisibleElement (elmnt, wanted = 'full') {
 		total.height = true;
     partial.height = true;
 	} else if (!(displayedScreen.yMax < elmtPos.yMin || displayedScreen.yMin > elmtPos.yMax)) {
-		partial.height = true;
+    let hiddenPercent = 0
+    const visibility1 = displayedScreen.yMin - elmtPos.yMin
+    const visibility2 = elmtPos.yMax - displayedScreen.yMax
+    if (visibility1 > 0) {
+      hiddenPercent = visibility1 / elmnt.height
+    }
+    if (visibility2 > 0) {
+      hiddenPercent = visibility2 / elmnt.height
+    }
+    if (100 - (hiddenPercent*100) > visibilityPercent) {
+      partial.height = true;
+    }
 	}
 
   if (wanted === 'full') {
