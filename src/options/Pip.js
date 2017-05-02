@@ -25,11 +25,12 @@ export default class Pip {
     this.playerHasBeenViewed = false
     this.dataLoaded = false
     this.reduced = false
-    this.posterUrl = this.getPosterUrl()
+    // this.posterUrl = this.getPosterUrl()
 
     this.addListeners()
     this.addStyle()
-    this.addPoster()
+    // this.addPoster()
+    this.addPosterBackground()
   }
 
   defineLoadingState () {
@@ -82,12 +83,17 @@ export default class Pip {
       width: ${this.width}px;
       height: ${this.height}px;
     }`
-    style.innerHTML += `.poster {
+    /*style.innerHTML += `.poster {
       background-repeat:no-repeat;
       background-size:cover;
       height:100%;
       width:100%;
       background-image: url("${this.posterUrl}");
+    }`*/
+    style.innerHTML += `.poster {
+      height: 100%;
+      width: 100%;
+      background-color: #000000;
     }`
     style.innerHTML += `.hide {
       display: none;
@@ -97,6 +103,12 @@ export default class Pip {
 
   getPosterUrl () {
     return 'http://s2.dmcdn.net/iWJyE/x480-zsC.jpg'
+  }
+
+  addPosterBackground () {
+    this.posterDiv = document.createElement('div')
+    this.posterDiv.setAttribute('class', 'poster hide')
+    this.mainContainer.appendChild(this.posterDiv)
   }
 
   addPoster () {
@@ -110,15 +122,15 @@ export default class Pip {
   }
 
   showPoster () {
-    if (!!this.posterUrl) {
+    // if (!!this.posterUrl) {
       setTimeout(() => removeClassName(this.posterDiv, 'hide'), this.effectDuration * 1000)
-    }
+    // }
   }
 
   hidePoster () {
-    if (!!this.posterUrl) {
+    // if (!!this.posterUrl) {
       setTimeout(() => addClassName(this.posterDiv, 'hide'), this.effectDuration * 1000)
-    }
+    // }
   }
 
   reducePlayer () {
