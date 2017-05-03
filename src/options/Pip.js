@@ -73,7 +73,10 @@ export default class Pip {
     style.innerHTML += `div.insider {
       z-index: 2147483647;
     }`
-    style.innerHTML += `iframe {
+    /*style.innerHTML += `iframe {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    }`*/
+    style.innerHTML += `.shadowed {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
     }`
     style.innerHTML += `.pip {
@@ -139,7 +142,7 @@ export default class Pip {
       const finalSize = {w: this.width, h: this.height}
       const delta = this.calculateTranslation(this.wdmPlayer, finalSize, 'reduce')
       this.showPoster()
-      this.translate(this.wdmPlayer, delta, finalSize)
+      this.translate(this.wdmPlayer, delta, finalSize, true)
       this.addCloseBtn()
       this.addEscapEvent()
     }
@@ -152,7 +155,7 @@ export default class Pip {
       const delta = this.calculateTranslation(this.wdmPlayer, finalSize, 'maximize')
       this.removeCloseBtn()
       this.removeEscapeEvent()
-      this.translate(this.wdmPlayer, delta, finalSize)
+      this.translate(this.wdmPlayer, delta, finalSize, false)
       this.hidePoster()
     }
   }
@@ -189,15 +192,17 @@ export default class Pip {
     return delta
   }
 
-  translate (element, delta, finalSize) {
+  translate (element, delta, finalSize, reduce) {
     element.style.transform = `translateX(${delta.x}px) translateY(${delta.y}px)`
     element.style.transition = `all ${this.effectDuration}s ease-in-out`
     element.width = `${finalSize.w}px`
     element.height = `${finalSize.h}px`
     element.style.zIndex = '2147483647'
+    if (!reduce) { removeClassName(this.wdmPlayerContainer, 'shadowed') }
     setTimeout(() => {
       element.style = ''
       addOrRemoveClassName(this.wdmPlayerContainer, 'pip')
+      if (reduce) { addClassName(this.wdmPlayerContainer, 'shadowed') }
     }, this.effectDuration * 1000)
   }
 
